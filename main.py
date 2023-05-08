@@ -10,29 +10,41 @@ def create_board():
 	for i in range(4):
 		for j in range(4):
 			if i == j == 3:
-				board[i][j] = ''
+				board[i][j] = 0
 			else:
 				board[i][j] = next(nums_iter)
 	return board
+
 
 # обновляем интерфейс
 def update_board():
 	for i in range(4):
 		for j in range(4):
-			if board[i][j] != '':
+			if board[i][j] != 0:
 				buttons[i][j].config(text=str(board[i][j]))
 			else:
 				buttons[i][j].config(text='')
+	if is_win():
+		message.config(text="Вы победили!")
+
 
 # получаем ход пользователя
 def get_move(row, col):
 	for i in range(4):
 		for j in range(4):
-			if board[i][j] == '':
+			if board[i][j] == 0:
 				if (row == i and abs(col - j) == 1) or (col == j and abs(row - i) == 1):
 					board[i][j], board[row][col] = board[row][col], board[i][j]
 					update_board()
-					return
+
+
+#проверка победы
+def is_win():
+	nums = list(range(1, 16))
+	nums.append(0)
+	flat_board = [num for row in board for num in row]
+	return flat_board == nums
+
 
 # создаем окно и игровое поле
 root = tk.Tk()
