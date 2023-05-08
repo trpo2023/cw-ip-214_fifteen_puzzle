@@ -6,6 +6,8 @@ def create_board():
 	board = [[0] * 4 for _ in range(4)]
 	nums = list(range(1, 16))
 	random.shuffle(nums)
+	while is_solved(nums):
+		random.shuffle(nums)
 	nums_iter = iter(nums)
 	for i in range(4):
 		for j in range(4):
@@ -27,6 +29,18 @@ def update_board():
 	if is_win():
 		message.config(text="Вы победили!")
 
+#проверка на собираемость
+def is_solved(nums):
+	tmp = 0
+	for i in range(len(nums)):
+		if nums[i]:
+			for j in range(i):
+				if nums[j] > nums[i]:
+					tmp += 1
+	for i in range(len(nums)):
+		if nums[i] == 0:
+			tmp +=1 + i//4
+	return tmp%2
 
 # получаем ход пользователя
 def get_move(row, col):
@@ -47,21 +61,21 @@ def is_win():
 
 
 # создаем окно и игровое поле
-root = tk.Tk()
-root.title('Пятнашки')
+window = tk.Tk()
+window.title('Пятнашки')
 
 board = create_board()
 
 buttons = [[0] * 4 for _ in range(4)]
 for i in range(4):
 	for j in range(4):
-		button = tk.Button(root, width=4, height=2, font=('Arial', 20, 'bold'), command=lambda row=i, col=j: get_move(row, col))
+		button = tk.Button(window, width=4, height=2, font=('Arial', 20, 'bold'), command=lambda row=i, col=j: get_move(row, col))
 		button.grid(row=i, column=j)
 		buttons[i][j] = button
 
-message = tk.Label(root, text='', font=('Arial', 14))
+message = tk.Label(window, text='', font=('Arial', 14))
 message.grid(row=4, column=0, columnspan=4)
 
 update_board()
 
-root.mainloop()
+window.mainloop()
