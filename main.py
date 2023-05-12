@@ -11,10 +11,11 @@ def create_board():
 	nums_iter = iter(nums)
 	for i in range(4):
 		for j in range(4):
-			if i == j == 3:
-				board[i][j] = 0
-			else:
+			if i != 3 or  j != 3:
 				board[i][j] = next(nums_iter)
+			else:
+				continue
+	board[3][3] = 0
 	return board
 
 
