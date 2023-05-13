@@ -1,5 +1,8 @@
 import tkinter as tk
 import random
+from time import time
+
+timeGame = time()
 
 # создаем игровое поле
 def create_board():
@@ -28,7 +31,10 @@ def update_board():
 			else:
 				buttons[i][j].config(text='')
 	if is_win():
-		message.config(text="Вы победили!")
+		for i in range(4):
+			for j in range(4):
+				buttons[i][j].config(state='disabled')
+		message.config(text="Вы победили!" + "Ваше время " + str(int(timeGame = time())) + " сек.")
 
 #проверка на собираемость
 def is_solved(nums):
