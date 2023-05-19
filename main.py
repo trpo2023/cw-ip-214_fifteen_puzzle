@@ -1,8 +1,30 @@
 import tkinter as tk
 import random
-from time import time
+#from time import time
 
-timeGame = time()
+#timeGame = time()
+
+def start_game():
+	window = tk.Tk()
+	window.title('Пятнашки')
+	global board
+	board = create_board()
+	
+	global buttons
+	buttons = [[0] * 4 for _ in range(4)]
+	for i in range(4):
+		for j in range(4):
+			button = tk.Button(window, width=4, height=2, font=('Arial', 20, 'bold'), command=lambda row=i, col=j: get_move(row, col))
+			button.grid(row=i, column=j)
+			buttons[i][j] = button
+	global message
+	message = tk.Label(window, text='', font=('Arial', 14))
+	message.grid(row=4, column=0, columnspan=4)
+
+	update_board()
+
+	window.mainloop()
+
 
 # создаем игровое поле
 def create_board():
@@ -34,8 +56,8 @@ def update_board():
 		for i in range(4):
 			for j in range(4):
 				buttons[i][j].config(state='disabled')
-		message.config(text="Вы победили!" + "Ваше время " + str(int(timeGame = time())) + " сек.")
-
+		#message.config(text="Вы победили!" + "Ваше время " + str(int(timeGame = time())) + " сек.")
+		message.config(text="Вы победили!")
 #проверка на собираемость
 def is_solved(nums):
 	tmp = 0
@@ -67,22 +89,5 @@ def is_win():
 	return flat_board == nums
 
 
-# создаем окно и игровое поле
-window = tk.Tk()
-window.title('Пятнашки')
+start_game()
 
-board = create_board()
-
-buttons = [[0] * 4 for _ in range(4)]
-for i in range(4):
-	for j in range(4):
-		button = tk.Button(window, width=4, height=2, font=('Arial', 20, 'bold'), command=lambda row=i, col=j: get_move(row, col))
-		button.grid(row=i, column=j)
-		buttons[i][j] = button
-
-message = tk.Label(window, text='', font=('Arial', 14))
-message.grid(row=4, column=0, columnspan=4)
-
-update_board()
-
-window.mainloop()
