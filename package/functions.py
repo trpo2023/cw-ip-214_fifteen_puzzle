@@ -85,8 +85,8 @@ def is_solved(nums):
 def get_move(row, col):
     for i in range(4):
         for j in range(4):
-            if board[i][j] == 0 and (row == i and abs(
-                    col - j) == 1) or (col == j and abs(row - i) == 1):
+            if board[i][j] == 0 and ((row == i and abs(
+                    col - j) == 1) or (col == j and abs(row - i) == 1)):
                 board[i][j], board[row][col] = board[row][col], board[i][j]
                 update_board()
 
