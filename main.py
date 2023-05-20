@@ -1,5 +1,5 @@
 import tkinter as tk
 import random
-from package import *
+from package import functions
 
 functions.start_game()
